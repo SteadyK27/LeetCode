@@ -11,7 +11,7 @@
  * @return {number[][]}
  */
 var levelOrder = function(root) {
-    // 접근 방식: BFS를 사용하여 해결하면 될 듯함, 그런데 문제는 DFS로 푼듯함
+    // 접근 방식: BFS를 사용하여 해결하면 될 듯함, 하지만 큐안쓰고 DFS로 풀려서 DFS로 푼듯함
     // 시간 복잡도: O(V+E)
     // 공간 복잡도: ?? O(V^2)
     if (!root) return [];
@@ -21,13 +21,13 @@ var levelOrder = function(root) {
     let arr = [];
 
     arr[level] = [root.val];
-    bfs(root.left, nextLevel, arr);
-    bfs(root.right, nextLevel, arr);
+    dfs(root.left, nextLevel, arr);
+    dfs(root.right, nextLevel, arr);
   
     return arr;
 };
 
-const bfs = function(node, level, arr) {
+const dfs = function(node, level, arr) {
     if (!node) return;
 
     const nextLevel = level + 1;
@@ -38,8 +38,8 @@ const bfs = function(node, level, arr) {
         arr[level].push(node.val);
     }
 
-    bfs(node.left, nextLevel, arr);
-    bfs(node.right, nextLevel, arr);
+    dfs(node.left, nextLevel, arr);
+    dfs(node.right, nextLevel, arr);
     
     return;
 }
