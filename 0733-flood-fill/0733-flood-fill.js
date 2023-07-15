@@ -5,23 +5,32 @@
  * @param {number} color
  * @return {number[][]}
  */
-var floodFill = function(image, sr, sc, color) {
-    
-    explore(image, sr, sc, color, image[sr][sc]);
+const floodFill = function(image, sr, sc, color) {
+    // 풀이 방법: 저번에 DFS로 풀어서 이번엔 BFS로 풀어보기
+    // 시간 복잡도: 조사 필요
+    // 공간 복잡도: 조사 필요
+    const queue = [[sr,sc]];
+    const init = image[sr][sc];
+
+    while(queue.length > 0) {
+        explore(image, queue.shift(), color, queue, init);
+    }
 
     return image;
 };
 
-const explore = function(image, sr, sc, color, firstColor) {
-    if (sr < 0 || sc < 0 || sr >= image.length || sc >= image[0].length) return;
-    if (image[sr][sc] !== firstColor || image[sr][sc] === color) return;
+const explore = function(image, position, color, queue, init) {
+    const [row, coloum] = position;
 
-    image[sr][sc] = color;
+    if (row < 0 || row > image.length - 1 || coloum < 0 || coloum > image[0].length - 1) return;
+    console.log(row,coloum);
+    if (image[row][coloum] === color) return;
+    if (image[row][coloum] !== init) return;
 
-    explore(image, sr , sc - 1, color, firstColor);
-    explore(image, sr - 1, sc, color, firstColor);
-    explore(image, sr + 1 , sc, color, firstColor);
-    explore(image, sr, sc + 1, color, firstColor);
+    image[row][coloum] = color;
 
-    return;
+    queue.push([row + 1, coloum]);
+    queue.push([row - 1, coloum]);
+    queue.push([row, coloum + 1]);
+    queue.push([row, coloum - 1]);
 }
